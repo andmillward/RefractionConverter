@@ -1,28 +1,19 @@
 package com.millward.cliapplication;
 
-import com.millward.services.RefractionConversionService;
-import com.millward.services.exceptions.InvalidUserInputRefractionMeasurementException;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.millward.utils.RefractionConversionUtils;
+import com.millward.utils.exceptions.InvalidUserInputRefractionMeasurementException;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 import java.util.Scanner;
 
-@SpringBootApplication
+// Entry point for converting measurements via the command line.
 @ComponentScan("com.millward")
 public class CliApplication implements CommandLineRunner {
 
-    private static RefractionConversionService refractionConversionService;
-
-    @Autowired
-    public CliApplication(RefractionConversionService refractionConversionService) {
-        CliApplication.refractionConversionService = refractionConversionService;
-    }
-
     public static void main(String[] args) {
-        SpringApplication.run(CliApplication.class, args);
+        CliApplication cliApplication = new CliApplication();
+        cliApplication.run();
     }
 
     @Override
@@ -39,7 +30,7 @@ public class CliApplication implements CommandLineRunner {
 
             String result;
             try {
-                result = refractionConversionService.convertRefraction(rawUserInput).toString();
+                result = RefractionConversionUtils.convertRefraction(rawUserInput).toString();
             } catch (InvalidUserInputRefractionMeasurementException e) {
                 result = e.getMessage();
             }

@@ -1,0 +1,74 @@
+POST http://localhost:8080/convert HTTP/1.1
+content-type: application/json
+
+[
+    {
+        "cylinderPower": -3.25,
+        "xaxis": 70,
+        "plusCylinder": true
+    }
+]
+
+###
+
+POST http://localhost:8080/convert HTTP/1.1
+content-type: application/json
+
+[
+    {
+        "spherePower": 1.50,
+        "cylinderPower": -1.25,
+        "xaxis": 80,
+        "plusCylinder": true
+    },
+    {
+        "spherePower": -1.23,
+        "cylinderPower": 1.5,
+        "xaxis": 50,
+        "plusCylinder": true
+    }
+]
+
+###
+
+POST http://localhost:8080/convert HTTP/1.1
+content-type: application/json
+
+[
+    {
+        "spherePower": 1.50,
+        "cylinderPower": -1.25,
+        "xaxis": 80,
+        "plusCylinder": true
+    },
+    {
+        "spherePower": -1.23,
+        "cylinderPower": 2,
+        "xaxis": 50,
+        "plusCylinder": true
+    },
+    {
+        "spherePower": 9.45,
+        "cylinderPower": 1.5,
+        "xaxis": 67,
+        "plusCylinder": true
+    },
+    {
+        "spherePower": -54.23,
+        "cylinderPower": 43.9,
+        "xaxis": 786,
+        "plusCylinder": true
+    },
+    {
+        "spherePower": 4.34,
+        "cylinderPower": -18,
+        "xaxis": 43,
+        "plusCylinder": true
+    },
+    {
+        "spherePower": -2.23,
+        "cylinderPower": -2.70,
+        "xaxis": 546,
+        "plusCylinder": true
+    }
+]
