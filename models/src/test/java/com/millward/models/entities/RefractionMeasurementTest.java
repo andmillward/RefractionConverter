@@ -2,6 +2,8 @@ package com.millward.models.entities;
 
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class RefractionMeasurementTest {
@@ -12,20 +14,20 @@ class RefractionMeasurementTest {
                 "\nCylinder Power: -1.40" +
                 "\nAxis: x043" +
                 "\n1.23 -1.40 x043";
-        RefractionMeasurement testMeasurement = new RefractionMeasurement(1.23, -1.4, 43);
+        RefractionMeasurement testMeasurement = new RefractionMeasurement(new BigDecimal("1.23"), new BigDecimal("-1.4"), 43);
         assertEquals(expected, testMeasurement.toString());
     }
 
     @Test
     void isPlusCylinder() {
-        RefractionMeasurement refractionMeasurement = new RefractionMeasurement(1.56, -23, 34);
+        RefractionMeasurement refractionMeasurement = new RefractionMeasurement(new BigDecimal("1.56"), new BigDecimal("-23"), 34);
         assertEquals(false, refractionMeasurement.isPlusCylinder());
 
-        refractionMeasurement.setCylinderPower(43.34);
+        refractionMeasurement.setCylinderPower(new BigDecimal("43.34"));
         assertEquals(true, refractionMeasurement.isPlusCylinder());
 
         // We're treating zero as positive until there's a good reason not to
-        refractionMeasurement.setCylinderPower(0);
+        refractionMeasurement.setCylinderPower(new BigDecimal("0"));
         assertEquals(true, refractionMeasurement.isPlusCylinder());
     }
 }

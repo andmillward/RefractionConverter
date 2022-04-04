@@ -13,8 +13,6 @@ public class Application {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-        RefractionMeasurement refractionMeasurement = new RefractionMeasurement(.25, 1.25, 170);
-        System.out.println(RefractionConversionUtils.convertRefraction(refractionMeasurement));
     }
 
 }

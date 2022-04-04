@@ -3,6 +3,8 @@ package com.millward.utils;
 import com.millward.models.entities.RefractionMeasurement;
 import com.millward.utils.exceptions.InvalidUserInputRefractionMeasurementException;
 
+import java.math.BigDecimal;
+
 public class RefractionConversionUtils {
 
     // Delimiter constant so it can easily be updated
@@ -10,8 +12,8 @@ public class RefractionConversionUtils {
 
     // Users may want refraction measurements to be converted between positive and negative notations
     public static RefractionMeasurement convertRefraction(RefractionMeasurement refractionMeasurement) {
-        refractionMeasurement.setSpherePower(refractionMeasurement.getSpherePower() + refractionMeasurement.getCylinderPower());
-        refractionMeasurement.setCylinderPower(refractionMeasurement.getCylinderPower() * -1);
+        refractionMeasurement.setSpherePower(refractionMeasurement.getSpherePower().add(refractionMeasurement.getCylinderPower()));
+        refractionMeasurement.setCylinderPower(refractionMeasurement.getCylinderPower().negate());
         refractionMeasurement.setXAxis(normalizeAxis(refractionMeasurement.getXAxis() + 90));
         return refractionMeasurement;
     }
@@ -30,8 +32,8 @@ public class RefractionConversionUtils {
             throw new InvalidUserInputRefractionMeasurementException(rawUserInput, "Wrong number of values, should be three (3) seperated by a space.");
         }
         try {
-            double spherePower = Double.parseDouble(measurementVars[0]);
-            double cylinderPower = Double.parseDouble(measurementVars[1]);
+            BigDecimal spherePower = new BigDecimal(measurementVars[0]);
+            BigDecimal cylinderPower = new BigDecimal(measurementVars[1]);
 
             if (measurementVars[2].matches("[Xx][+-]?\\d*")) {
                 measurementVars[2] = measurementVars[2].substring(1);

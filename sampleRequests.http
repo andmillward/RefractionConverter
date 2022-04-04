@@ -1,0 +1,17 @@
+GET http://localhost:8080/convert HTTP/1.1
+content-type: application/json
+
+[
+    {
+        "spherePower": 1.50,
+        "cylinderPower": -1.25,
+        "xaxis": 80,
+        "plusCylinder": true
+    },
+    {
+        "spherePower": -1.23,
+        "cylinderPower": 1.5,
+        "xaxis": 50,
+        "plusCylinder": true
+    }
+]

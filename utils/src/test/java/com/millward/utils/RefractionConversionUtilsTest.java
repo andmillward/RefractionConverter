@@ -4,6 +4,8 @@ import com.millward.models.entities.RefractionMeasurement;
 import com.millward.utils.exceptions.InvalidUserInputRefractionMeasurementException;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class RefractionConversionUtilsTest {
@@ -14,27 +16,27 @@ class RefractionConversionUtilsTest {
             // Test if raw user input override works
             RefractionMeasurement testRefraction = RefractionConversionUtils.convertRefraction("-3.75 +2.00 x154");
             assertFalse(testRefraction.isPlusCylinder());
-            assertEquals(-1.75, testRefraction.getSpherePower());
-            assertEquals(-2, testRefraction.getCylinderPower());
+            assertEquals(new BigDecimal("-1.75"), testRefraction.getSpherePower());
+            assertEquals(new BigDecimal("-2.00"), testRefraction.getCylinderPower());
             assertEquals(64, testRefraction.getXAxis());
 
             // Test if the same values that were parsed produce the same results
-            testRefraction = new RefractionMeasurement(-3.75, 2, 154);
+            testRefraction = new RefractionMeasurement(new BigDecimal("-3.75"), new BigDecimal("2"), 154);
             RefractionConversionUtils.convertRefraction(testRefraction);
-            assertEquals(-1.75, testRefraction.getSpherePower());
-            assertEquals(-2, testRefraction.getCylinderPower());
+            assertEquals(new BigDecimal("-1.75"), testRefraction.getSpherePower());
+            assertEquals(new BigDecimal("-2"), testRefraction.getCylinderPower());
             assertEquals(64, testRefraction.getXAxis());
 
-            testRefraction = new RefractionMeasurement(50000.12312312, 434344.2342344563, -951568);
+            testRefraction = new RefractionMeasurement(new BigDecimal("50000.12312312"), new BigDecimal("434344.2342344563"), -951568);
             RefractionConversionUtils.convertRefraction(testRefraction);
-            assertEquals(484344.3573575763, testRefraction.getSpherePower());
-            assertEquals(-434344.2342344563, testRefraction.getCylinderPower());
+            assertEquals(new BigDecimal("484344.3573575763"), testRefraction.getSpherePower());
+            assertEquals(new BigDecimal("-434344.2342344563"), testRefraction.getCylinderPower());
             assertEquals(2, testRefraction.getXAxis());
 
-            testRefraction = new RefractionMeasurement(-1, 1, 0);
+            testRefraction = new RefractionMeasurement(new BigDecimal("-1"), new BigDecimal("1"), 0);
             RefractionConversionUtils.convertRefraction(testRefraction);
-            assertEquals(0, testRefraction.getSpherePower());
-            assertEquals(-1, testRefraction.getCylinderPower());
+            assertEquals(new BigDecimal("0"), testRefraction.getSpherePower());
+            assertEquals(new BigDecimal("-1"), testRefraction.getCylinderPower());
             assertEquals(90, testRefraction.getXAxis());
 
         } catch (InvalidUserInputRefractionMeasurementException e) {
@@ -55,18 +57,18 @@ class RefractionConversionUtilsTest {
     void parseUserInputToMeasurement() {
         try {
             RefractionMeasurement testRefraction = RefractionConversionUtils.parseUserInputToMeasurement("-3.75 +2.00 x154");
-            assertEquals(-3.75, testRefraction.getSpherePower());
-            assertEquals(2, testRefraction.getCylinderPower());
+            assertEquals(new BigDecimal("-3.75"), testRefraction.getSpherePower());
+            assertEquals(new BigDecimal("2.00"), testRefraction.getCylinderPower());
             assertEquals(154, testRefraction.getXAxis());
 
             testRefraction = RefractionConversionUtils.parseUserInputToMeasurement("-32423432.45645 +6786785 x-123134");
-            assertEquals(-32423432.45645, testRefraction.getSpherePower());
-            assertEquals(6786785, testRefraction.getCylinderPower());
+            assertEquals(new BigDecimal("-32423432.45645"), testRefraction.getSpherePower());
+            assertEquals(new BigDecimal("6786785"), testRefraction.getCylinderPower());
             assertEquals(166, testRefraction.getXAxis());
 
             testRefraction = RefractionConversionUtils.parseUserInputToMeasurement("123 -32.6 x11");
-            assertEquals(123, testRefraction.getSpherePower());
-            assertEquals(-32.6, testRefraction.getCylinderPower());
+            assertEquals(new BigDecimal("123"), testRefraction.getSpherePower());
+            assertEquals(new BigDecimal("-32.6"), testRefraction.getCylinderPower());
             assertEquals(11, testRefraction.getXAxis());
 
         } catch (InvalidUserInputRefractionMeasurementException e) {

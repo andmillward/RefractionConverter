@@ -1,29 +1,31 @@
 package com.millward.models.entities;
 
+import java.math.BigDecimal;
+
 public class RefractionMeasurement {
-    private double spherePower;
-    private double cylinderPower;
+    private BigDecimal spherePower;
+    private BigDecimal cylinderPower;
     private int xAxis;
 
-    public RefractionMeasurement(double spherePower, double cylinderPower, int xAxis) {
+    public RefractionMeasurement(BigDecimal spherePower, BigDecimal cylinderPower, int xAxis) {
         this.setSpherePower(spherePower);
         this.setCylinderPower(cylinderPower);
         this.setXAxis(xAxis);
     }
 
-    public double getSpherePower() {
+    public BigDecimal getSpherePower() {
         return spherePower;
     }
 
-    public void setSpherePower(double spherePower) {
+    public void setSpherePower(BigDecimal spherePower) {
         this.spherePower = spherePower;
     }
 
-    public double getCylinderPower() {
+    public BigDecimal getCylinderPower() {
         return cylinderPower;
     }
 
-    public void setCylinderPower(double cylinderPower) {
+    public void setCylinderPower(BigDecimal cylinderPower) {
         this.cylinderPower = cylinderPower;
     }
 
@@ -46,6 +48,6 @@ public class RefractionMeasurement {
     }
 
     public boolean isPlusCylinder() {
-        return getCylinderPower() >= 0;
+        return getCylinderPower().compareTo(BigDecimal.ZERO) >= 0;
     }
 }
