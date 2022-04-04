@@ -29,13 +29,13 @@
         </dependency>
         <dependency>
             <groupId>com.millward</groupId>
-            <artifactId>services</artifactId>
+            <artifactId>utils</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.millward</groupId>
-            <artifactId>services</artifactId>
+            <artifactId>utils</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
