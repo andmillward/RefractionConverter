@@ -12,10 +12,11 @@ public class RefractionConversionUtils {
 
     // Users may want refraction measurements to be converted between positive and negative notations
     public static RefractionMeasurement convertRefraction(RefractionMeasurement refractionMeasurement) {
-        refractionMeasurement.setSpherePower(refractionMeasurement.getSpherePower().add(refractionMeasurement.getCylinderPower()));
-        refractionMeasurement.setCylinderPower(refractionMeasurement.getCylinderPower().negate());
-        refractionMeasurement.setXAxis(normalizeAxis(refractionMeasurement.getXAxis() + 90));
-        return refractionMeasurement;
+        RefractionMeasurement convertedRefractionMeasurement = new RefractionMeasurement();
+        convertedRefractionMeasurement.setSpherePower(refractionMeasurement.getSpherePower().add(refractionMeasurement.getCylinderPower()));
+        convertedRefractionMeasurement.setCylinderPower(refractionMeasurement.getCylinderPower().negate());
+        convertedRefractionMeasurement.setXAxis(normalizeAxis(refractionMeasurement.getXAxis() + 90));
+        return convertedRefractionMeasurement;
     }
 
     // An override to streamline raw user being converted
@@ -34,11 +35,7 @@ public class RefractionConversionUtils {
         try {
             BigDecimal spherePower = new BigDecimal(measurementVars[0]);
             BigDecimal cylinderPower = new BigDecimal(measurementVars[1]);
-
-            if (measurementVars[2].matches("[Xx][+-]?\\d*")) {
-                measurementVars[2] = measurementVars[2].substring(1);
-            }
-
+            measurementVars[2] = measurementVars[2].replaceAll("(?i)x", "");
             int xAxis = Integer.parseInt(measurementVars[2]);
             refractionMeasurement = new RefractionMeasurement(spherePower, cylinderPower, normalizeAxis(xAxis));
         } catch (NumberFormatException e) {

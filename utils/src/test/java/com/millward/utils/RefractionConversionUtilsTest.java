@@ -22,35 +22,29 @@ class RefractionConversionUtilsTest {
 
             // Test if the same values that were parsed produce the same results
             testRefraction = new RefractionMeasurement(new BigDecimal("-3.75"), new BigDecimal("2"), 154);
-            RefractionConversionUtils.convertRefraction(testRefraction);
-            assertEquals(new BigDecimal("-1.75"), testRefraction.getSpherePower());
-            assertEquals(new BigDecimal("-2"), testRefraction.getCylinderPower());
-            assertEquals(64, testRefraction.getXAxis());
+            RefractionMeasurement testResult = RefractionConversionUtils.convertRefraction(testRefraction);
+            assertEquals(new BigDecimal("-1.75"), testResult.getSpherePower());
+            assertEquals(new BigDecimal("-2"), testResult.getCylinderPower());
+            assertEquals(64, testResult.getXAxis());
 
             testRefraction = new RefractionMeasurement(new BigDecimal("50000.12312312"), new BigDecimal("434344.2342344563"), -951568);
-            RefractionConversionUtils.convertRefraction(testRefraction);
-            assertEquals(new BigDecimal("484344.3573575763"), testRefraction.getSpherePower());
-            assertEquals(new BigDecimal("-434344.2342344563"), testRefraction.getCylinderPower());
-            assertEquals(2, testRefraction.getXAxis());
+            testResult = RefractionConversionUtils.convertRefraction(testRefraction);
+            assertEquals(new BigDecimal("484344.3573575763"), testResult.getSpherePower());
+            assertEquals(new BigDecimal("-434344.2342344563"), testResult.getCylinderPower());
+            assertEquals(2, testResult.getXAxis());
 
             testRefraction = new RefractionMeasurement(new BigDecimal("-1"), new BigDecimal("1"), 0);
-            RefractionConversionUtils.convertRefraction(testRefraction);
-            assertEquals(new BigDecimal("0"), testRefraction.getSpherePower());
-            assertEquals(new BigDecimal("-1"), testRefraction.getCylinderPower());
-            assertEquals(90, testRefraction.getXAxis());
+            testResult = RefractionConversionUtils.convertRefraction(testRefraction);
+            assertEquals(new BigDecimal("0"), testResult.getSpherePower());
+            assertEquals(new BigDecimal("-1"), testResult.getCylinderPower());
+            assertEquals(90, testResult.getXAxis());
 
         } catch (InvalidUserInputRefractionMeasurementException e) {
             fail("Invalid user input was thrown on correct input: " + e.getMessage());
         }
 
         // Test for legitimate failure
-        try {
-            RefractionMeasurement testRefraction = RefractionConversionUtils.convertRefraction("1.25 asdfsadf xsdafs");
-            fail("Invalid user input exception should be thrown");
-        } catch (InvalidUserInputRefractionMeasurementException e) {
-            // Task failed successfully
-            assertNotNull(e.getMessage());
-        }
+        assertThrows(InvalidUserInputRefractionMeasurementException.class, () -> RefractionConversionUtils.convertRefraction("1.25 asdfsadf xsdafs"));
     }
 
     @Test
@@ -66,7 +60,7 @@ class RefractionConversionUtilsTest {
             assertEquals(new BigDecimal("6786785"), testRefraction.getCylinderPower());
             assertEquals(166, testRefraction.getXAxis());
 
-            testRefraction = RefractionConversionUtils.parseUserInputToMeasurement("123 -32.6 x11");
+            testRefraction = RefractionConversionUtils.parseUserInputToMeasurement("123 -32.6 X11");
             assertEquals(new BigDecimal("123"), testRefraction.getSpherePower());
             assertEquals(new BigDecimal("-32.6"), testRefraction.getCylinderPower());
             assertEquals(11, testRefraction.getXAxis());
@@ -91,6 +85,9 @@ class RefractionConversionUtilsTest {
 
         normalizedAxis = RefractionConversionUtils.normalizeAxis(0);
         assertEquals(0, normalizedAxis);
+
+        normalizedAxis = RefractionConversionUtils.normalizeAxis(180);
+        assertEquals(180, normalizedAxis);
 
         normalizedAxis = RefractionConversionUtils.normalizeAxis(181);
         assertEquals(1, normalizedAxis);

@@ -12,18 +12,18 @@ import static org.junit.jupiter.api.Assertions.*;
 class ConversionControllerTest {
 
     @Test
-    void getConvertedMeasurements() {
+    void convertedMeasurements() {
         ConversionController controller = new ConversionController();
-        
+
         List<RefractionMeasurement> refractionMeasurementsTest = new ArrayList<>();
         refractionMeasurementsTest.add(new RefractionMeasurement(new BigDecimal("1.50"), new BigDecimal("-1.25"), 80));
         refractionMeasurementsTest.add(new RefractionMeasurement(new BigDecimal("4.55"), new BigDecimal("16.54"), 1234));
 
-        List<RefractionMeasurement> refractionMeasurementsResult = new ArrayList<>();
-        refractionMeasurementsResult = controller.getConvertedMeasurements(refractionMeasurementsTest);
+        List<RefractionMeasurement> refractionMeasurementsResult;
+        refractionMeasurementsResult = controller.convertedMeasurements(refractionMeasurementsTest);
 
         if (refractionMeasurementsResult.size() != 2) {
-            fail("Wrong number of converted objects. Should be 2 is actually " + refractionMeasurementsResult.size());
+            fail("Wrong number of converted objects. Should be 2 but is actually " + refractionMeasurementsResult.size());
         }
 
         assertEquals(new BigDecimal("0.25"), refractionMeasurementsResult.get(0).getSpherePower());
